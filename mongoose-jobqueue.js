@@ -211,7 +211,7 @@ class JobQueue {
 
     // Extend default options with the ones passed to the constructor
     // _.extendOwn(this.options, opts)
-    opts = { ...opts, ...this.options }
+    this.options = { ...this.options, ...opts }
 
     this.name = name
     this.mongoose = mongoose
