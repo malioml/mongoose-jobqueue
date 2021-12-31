@@ -282,6 +282,28 @@ class JobQueue {
     })
   }
 
+  delete (id) {
+    return new Promise((resolve, reject) => {
+      const query = {
+        _id: id,
+        visible: {
+          $lte: JobQueueHelper.now() // Only fetch jobs that are not visible yet
+        }
+      }
+      this.queue.deleteMany(query)
+        .then((result) => {
+          if (!result) {
+            reject(new Error('MongoDB result was empty.'))
+            return
+          }
+
+          resolve(result.n)
+        }, (err) => {
+          reject(new Error(err))
+        })
+    })
+  }
+
   /**
    * Checkout a job from the queue
    *
