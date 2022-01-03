@@ -287,7 +287,7 @@ class JobQueue {
       const query = {
         _id: id,
         visible: {
-          $lte: JobQueueHelper.now() // Only fetch jobs that are not visible yet
+          $gte: JobQueueHelper.now() // Only fetch jobs that are not visible yet
         }
       }
       this.queue.deleteMany(query)
